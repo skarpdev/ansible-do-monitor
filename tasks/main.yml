@@ -1,2 +1,17 @@
 ---
 # tasks file for ansible-do-monitor
+- name: Import the DigitalOcean repository key
+  apt_key:
+    url: 'https://repos.sonar.digitalocean.com/sonar-agent.asc'
+    state: present
+
+- name: Add DigitalOcean repository
+  apt_repository:
+      repo='deb https://repos.sonar.digitalocean.com/apt main main'
+      state=present
+      filename='do_monitor'
+
+- name: Install do-monitor
+  apt: 
+      name: do-agent
+      update_cache: yes
